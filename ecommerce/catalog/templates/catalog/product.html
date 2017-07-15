@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title_page %}
+  {{ product.name }} | {{ block.super }}
+{% endblock %}
+
+{% block container %}
+    <div class="page-header">
+        <h1>{{ product.name }}</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <a href="#" class="thumbnail">
+                <img src="http://placehold.it/350x250" alt=""/>
+            </a>
+        </div>
+        <div class="col-sm-8">
+            <dl>
+                <dt>Descrição:</dt>
+                <dd>{{ product.description|linebreaks }}</dd>
+                <br>
+                <small>{{ product.slug }}</small>
+                <h3>Preço: </h3><h4>{{ product.price|floatformat:2 }}</h4>
+            </dl>
+        </div>
+    </div>
+{% endblock %}

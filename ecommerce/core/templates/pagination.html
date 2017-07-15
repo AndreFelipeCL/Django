@@ -1,0 +1,31 @@
+{% if paginator.num_pages > 1 %}
+    <nav aria-label="Page navigation example">
+      <ul class="pagination pagination-sm">
+          <li class="page-item {% if page_obj.number == 1 %}disabled{% endif %}">
+              <a class="page-link" href="?page=1{{ getvars }}">
+                  <span aria-hidden="true">&larr;</span>
+              </a>
+        </li>
+        {% for page in paginator.page_range %}
+            {% if forloop.first %}
+                <li class="page-item {% if page_obj.number == 1 %}disabled{% endif %}"><a class="page-link"
+                    href="{% if page_obj.number > 1 %}?page={{ page_obj.number|add:'-1' }}{{ getvars }}{% endif %}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a></li>
+            {% endif %}
+            <li class="page-item {% if page_obj.number == page %} active {% endif %}"><a class="page-link" href="?page={{ page }}{{ getvars }}">{{ page }}</a></li>
+            {% if forloop.last %}
+                <li class="page-item {% if page_obj.number == paginator.num_pages %}disabled{% endif %}">
+                    <a class="page-link" href="{% if page_obj.number < paginator.num_pages %}?page={{ page_obj.number|add:'1' }}{{ getvars }}{% endif %}">
+                        <span aria-hidden="true">&raquo;</span>
+                </a></li>
+            {% endif %}
+        {% endfor %}
+        <li class="page-item {% if page_obj.number == paginator.num_pages %}disabled{% endif %}">
+            <a class="page-link" href="?page={{paginator.num_pages}}{{ getvars }}">
+                <span aria-hidden="true">&rarr;</span>
+            </a>
+        </li>
+      </ul>
+    </nav>
+{% endif %}

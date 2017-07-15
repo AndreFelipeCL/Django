@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% comment %} Carregando a lib que vai gerenciar nosso template {% endcomment %}
+{% load widget_tweaks %}
+
+{% block title_page %}
+    {{ title }} | {{ block.super }}
+{% endblock %}
+
+{% block container %}
+    <div class="page-header">
+        {% if success %}
+            <h1>Obrigado!</h1>
+            <br><br>
+            <div class="alert alert-success">
+                Mensagem enviada com sucesso.
+            </div>
+        {% else %}
+            <h1><i class="fa fa-envelope fa-1x" aria-hidden="true"></i> Fale conosco</h1>
+            <br />
+            <form class="form-horizontal" action="" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    {% for field in form %}
+                        <div class="form-group {% if field.errors %} has-error {%endif %}">
+                            <label for="{{ field.auto_id }}" class="col-md-3 control-label">{{ field.label }}</label>
+                            <div class="{% if field.name == 'message' %} col-md-6 {% else %} col-md-3 {%endif %}">
+                                {% render_field field class='form-control' %}
+                                {% for error in field.errors %}
+                                    <span class="help-block error">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

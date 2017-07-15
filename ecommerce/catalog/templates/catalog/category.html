@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load pagination %}
+
+{% block title_page %}
+    {{ current_category.name }} | {{ block.super }}
+{% endblock %}
+
+{% block container %}
+    <div class="page-header">
+        <h1>{{ current_category.name }}</h1>
+    </div>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="http://placehold.it/350x250" alt="{{ product.name }}"/>
+                    </a>
+                    <div class="caption">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.description|linebreaks }}</p>
+                        <p><a href="#" class="btn btn-success" role="button">Comprar</a>
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-default" role="button">+ Detalhes</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% pagination request paginator page_obj %}
+{% endblock %}
